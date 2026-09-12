@@ -4,7 +4,7 @@ A 22-day video course on **Segment Routing over the MPLS data plane**, taking a
 network engineer from *why Segment Routing exists* through to designing,
 migrating and troubleshooting a production SR core.
 
-Created and presented by **Enam Ahmed** — [The Packet Path](https://www.youtube.com/@ThePacketPathWithPartha).
+Created and presented by **Enam Ahmed** — [The Packet Path With Partha](https://www.youtube.com/@ThePacketPathWithPartha).
 
 > **Watch on YouTube.** GitHub does not stream video — the files in `videos/`
 > download rather than play. The YouTube links below are the intended way to

@@ -1,0 +1,8 @@
+# working files that should never enter history
+*.wav
+audio/
+segments/
+video/
+build/
+Thumbs.db
+desktop.ini

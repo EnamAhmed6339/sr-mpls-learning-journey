@@ -81,11 +81,34 @@ OSPF needed a redesign to carry them.
 
 ---
 
+### Day 4 — The SID Family
+*Prefix, Node, Adjacency and Anycast — what each one instructs*
+
+Four names used almost interchangeably in conversation, and each encoded
+differently. A **Prefix-SID** is globally significant and travels as an SRGB
+index; an **Adjacency-SID** is locally significant, travels as an absolute
+label, and is allocated automatically when an adjacency comes up.
+
+Covers the flag bits with their real IOS XR defaults — **N** (Node-SID, set by
+default), **P / NP** (no-PHP), **E** (Explicit-Null, so MPLS EXP/TC bits survive
+the final hop) — and how OSPF's different bit layout maps one-to-one onto
+IS-IS's.
+
+Closes on the **Anycast-SID**: two routers advertising the same SID on purpose,
+giving coarse traffic engineering and automatic failover with no policy change.
+The requirement — every node sharing it must use the same SRGB.
+
+▶ Watch on YouTube · 13:26 ·
+[`videos/Day04_The_SID_Family.mp4`](videos/Day04_The_SID_Family.mp4)
+
+<img src="thumbnails/Day04.png" width="420" alt="Day 4 — The SID Family">
+
+---
+
 ## Coming up
 
 | Day | Topic |
 |---|---|
-| 4 | The SID Family — Prefix, Node, Adjacency and Anycast |
 | 5 | Reading the Label Stack |
 | 6 | The SR Forwarding Plane — LFIB, PHP, Explicit Null |
 | 7 | Configuring SR with IS-IS |

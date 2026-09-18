@@ -98,7 +98,7 @@ Closes on the **Anycast-SID**: two routers advertising the same SID on purpose,
 giving coarse traffic engineering and automatic failover with no policy change.
 The requirement — every node sharing it must use the same SRGB.
 
-▶ Watch on YouTube · 13:26 ·
+▶ [Watch on YouTube](https://youtu.be/NwdrLDNd-60) · 13:26 ·
 [`videos/Day04_The_SID_Family.mp4`](videos/Day04_The_SID_Family.mp4)
 
 <img src="thumbnails/Day04.png" width="420" alt="Day 4 — The SID Family">

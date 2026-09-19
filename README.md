@@ -105,11 +105,40 @@ The requirement — every node sharing it must use the same SRGB.
 
 ---
 
+### Day 5 — Reading the Label Stack
+*From an intent to an ordered list of instructions*
+
+A single Node-SID gets you the shortest path and nothing more. To control where
+traffic actually goes — avoid a link, force a region, guarantee a property — you
+need a list of SIDs. This episode builds one, then reads one back off a
+captured packet.
+
+The rule behind all of it: **only the top label in a stack is ever active.**
+Everything below waits its turn and is popped into place one hop at a time.
+
+```
+PE1 must reach PE2 while avoiding P1:
+
+  16002   →  get to P2 (the detour that dodges P1)
+  16004   →  then shortest path to PE2
+```
+
+Two labels, no per-hop state in the core, nothing signalled. Run in reverse,
+a captured stack decodes straight back into the path it encodes — subtract the
+SRGB base, and the indexes name the hops. Closes on **Maximum SID Depth**, the
+hardware ceiling on how many labels a platform can impose.
+
+▶ [Watch on YouTube](https://youtu.be/wbZUE7HYyp8) · 11:25 ·
+[`videos/Day05_Reading_the_Label_Stack.mp4`](videos/Day05_Reading_the_Label_Stack.mp4)
+
+<img src="thumbnails/Day05.png" width="420" alt="Day 5 — Reading the Label Stack">
+
+---
+
 ## Coming up
 
 | Day | Topic |
 |---|---|
-| 5 | Reading the Label Stack |
 | 6 | The SR Forwarding Plane — LFIB, PHP, Explicit Null |
 | 7 | Configuring SR with IS-IS |
 | 8 | Configuring SR with OSPF |

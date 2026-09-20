@@ -135,11 +135,43 @@ hardware ceiling on how many labels a platform can impose.
 
 ---
 
+### Day 6 — The SR Forwarding Plane
+*LFIB, penultimate hop popping, and Explicit Null*
+
+Five days of control-plane theory, and here is the reassuring part: almost
+none of it touches the forwarding plane. SR was deliberately designed to leave
+the LFIB — and the push/swap/pop every MPLS router already does — alone.
+
+One label, traced end to end. Node4 advertises `1.1.1.4/32` with Prefix-SID
+16004, requesting default behaviour:
+
+```
+PUSH   at the ingress router
+SWAP   at each transit router
+POP    at the penultimate hop   (PHP)
+```
+
+The packet reaches Node4 as plain IP, with no MPLS lookup at the egress router
+at all.
+
+**The trade-off.** PHP saves that lookup, but the label carrying the MPLS
+EXP/TC bits is gone before the packet arrives. For a pipe-model QoS design
+that depends on those bits surviving the last hop, the **E-flag** requests
+Explicit-Null instead — the penultimate hop *swaps* rather than pops, so the
+packet arrives still labelled and the marking is intact. One lookup saved
+versus QoS bits preserved, and it is worth deciding on purpose.
+
+▶ [Watch on YouTube](https://youtu.be/0Tl8j2QTWUM) · 12:21 ·
+[`videos/Day06_The_SR_Forwarding_Plane.mp4`](videos/Day06_The_SR_Forwarding_Plane.mp4)
+
+<img src="thumbnails/Day06.png" width="420" alt="Day 6 — The SR Forwarding Plane">
+
+---
+
 ## Coming up
 
 | Day | Topic |
 |---|---|
-| 6 | The SR Forwarding Plane — LFIB, PHP, Explicit Null |
 | 7 | Configuring SR with IS-IS |
 | 8 | Configuring SR with OSPF |
 | 9–22 | Mapping Server, LDP migration, SR-TE, TI-LFA, L3VPN/EVPN, troubleshooting |

@@ -1,0 +1,121 @@
+
+R5#ping 192.168.47.7
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.47.7, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 37/72/196 ms
+R5#
+
+R6#ping 192.168.48.8
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.48.8, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 34/41/54 ms
+R6#
+
+//2 Pairs CE belong to 2 VRF could reach to each other. Let’s check what’s happen on Core Area
+
+RP/0/0/CPU0:R1#show mpls forwarding 
+Sat Jun  6 16:06:15.313 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+16002  Pop         SR Pfx (idx 2)     Gi0/0/0/0    10.1.12.2       0           
+16003  16003       SR Pfx (idx 3)     Gi0/0/0/0    10.1.12.2       0           
+16004  16004       SR Pfx (idx 4)     Gi0/0/0/0    10.1.12.2       1543014     
+24000  Pop         SR Adj (idx 0)     Gi0/0/0/0    10.1.12.2       0           
+24001  Aggregate   Accounting: Per-VRF Aggr[V]   \
+                                      Accounting                   1560        
+24002  Aggregate   HR: Per-VRF Aggr[V]   \
+                                      HR                           154440      
+//2 Labels for L3VPN.
+
+
+
+
+RP/0/0/CPU0:R1#show bgp vpnv4 unicast
+Sat Jun  6 16:07:06.570 UTC
+BGP router identifier 1.1.1.1, local AS number 12345
+BGP generic scan interval 60 secs
+Non-stop routing is enabled
+BGP table state: Active
+Table ID: 0x0   RD version: 0
+BGP main routing table version 13
+BGP NSR Initial initsync version 5 (Reached)
+BGP NSR/ISSU Sync-Group versions 0/0
+BGP scan interval 60 secs
+
+Status codes: s suppressed, d damped, h history, * valid, > best
+              i - internal, r RIB-failure, S stale, N Nexthop-discard
+Origin codes: i - IGP, e - EGP, ? - incomplete
+   Network            Next Hop            Metric LocPrf Weight Path
+Route Distinguisher: 1:1 (default for vrf Accounting)
+*> 192.168.15.0/24    0.0.0.0                  0         32768 i
+*>i192.168.47.0/24    4.4.4.4                  0    100      0 i
+Route Distinguisher: 2:2 (default for vrf HR)
+*> 192.168.16.0/24    0.0.0.0                  0         32768 i
+*>i192.168.48.0/24    4.4.4.4                  0    100      0 i
+Route Distinguisher: 4.4.4.4:0
+*>i192.168.48.0/24    4.4.4.4                  0    100      0 i
+Route Distinguisher: 4.4.4.4:1
+*>i192.168.47.0/24    4.4.4.4                  0    100      0 i
+
+Processed 6 prefixes, 6 paths
+
+
+//VPNv4 could be advertised between 2 PE.
+
+
+RP/0/0/CPU0:R1#show bgp vrf HR 192.168.48.0/24
+Sat Jun  6 16:09:11.921 UTC
+BGP routing table entry for 192.168.48.0/24, Route Distinguisher: 2:2
+Versions:
+  Process           bRIB/RIB  SendTblVer
+  Speaker                 12          12
+Last Modified: Jun  6 15:31:19.712 for 00:37:52
+Paths: (1 available, best #1)
+  Not advertised to any peer
+  Path #1: Received by speaker 0
+  Not advertised to any peer
+  Local
+    4.4.4.4 (metric 4) from 4.4.4.4 (4.4.4.4)
+      Received Label 24001 
+      Origin IGP, metric 0, localpref 100, valid, internal, best, group-best, import-candidate, imported
+      Received Path ID 0, Local Path ID 0, version 12
+      Extended community: RT:1:200 
+      Source AFI: VPNv4 Unicast, Source VRF: default, Source Route Distinguisher: 4.4.4.4:0
+      
+RP/0/0/CPU0:R1#show bgp vrf Accounting 192.168.47.0/24
+Sat Jun  6 16:09:51.808 UTC
+BGP routing table entry for 192.168.47.0/24, Route Distinguisher: 1:1
+Versions:
+  Process           bRIB/RIB  SendTblVer
+  Speaker                 13          13
+Last Modified: Jun  6 15:31:19.712 for 00:38:32
+Paths: (1 available, best #1)
+  Not advertised to any peer
+  Path #1: Received by speaker 0
+  Not advertised to any peer
+  Local
+    4.4.4.4 (metric 4) from 4.4.4.4 (4.4.4.4)
+      Received Label 24002 
+      Origin IGP, metric 0, localpref 100, valid, internal, best, group-best, import-candidate, imported
+      Received Path ID 0, Local Path ID 0, version 13
+      Extended community: RT:1:100 
+      Source AFI: VPNv4 Unicast, Source VRF: default, Source Route Distinguisher: 4.4.4.4:1
+      
+//Label 24002, 24003 will be use for corresponding VRF’s route. Let’s use traceroute for check
+the label on packet.
+
+R5#traceroute 192.168.47.7
+Type escape sequence to abort.
+Tracing the route to 192.168.47.7
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.15.1 21 msec 5 msec 2 msec
+  2 10.1.12.2 [MPLS: Labels 16004/24002 Exp 0] 75 msec 39 msec 40 msec
+  3 10.1.23.3 [MPLS: Labels 16004/24002 Exp 0] 85 msec 39 msec 40 msec
+  4 10.1.34.4 47 msec 46 msec 59 msec
+  5 192.168.47.7 59 msec 48 msec * 
+R5#
+
+//It’s very similar with L3VPN over MPLS. 

@@ -168,6 +168,34 @@ versus QoS bits preserved, and it is worth deciding on purpose.
 
 ---
 
+### Day 7 — Configuring SR with IS-IS
+*From zero to a verified SR-enabled IS-IS core*
+
+Six days of theory, now turned into a configuration you could type into a
+router. The whole surface is smaller than you'd expect: one address-family
+command (`segment-routing mpls`), one index per loopback (`prefix-sid
+index`), and one global-block declaration for the SRGB. Most of an IS-IS
+network — adjacencies, loopbacks, reachability — is already there; this is
+the small delta on top of it.
+
+Three commands verify three different layers: `show isis segment-routing
+label table` proves the labels were computed, `show mpls forwarding` proves
+the LFIB actually programmed them, `show isis database verbose` proves what
+got advertised in the first place. Closes on four real places this breaks —
+forgetting `metric-style wide`, a non-passive loopback, a duplicate
+Prefix-SID index, and a mismatched SRGB.
+
+*Sourcing note: no IS-IS lab capture exists in this project's source
+material — every config available is OSPF-based. The CLI shown is standard,
+well-documented IOS XR syntax for teaching, not a captured lab output.*
+
+▶ [Watch on YouTube](https://youtu.be/9B0sjZa6Ono) · 11:39 ·
+[`videos/Day07_Configuring_SR_with_IS-IS.mp4`](videos/Day07_Configuring_SR_with_IS-IS.mp4)
+
+<img src="thumbnails/Day07.png" width="420" alt="Day 7 — Configuring SR with IS-IS">
+
+---
+
 ## Hands-on labs
 
 Standalone labs that go with the series — full device configs, verification
@@ -187,7 +215,6 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 7 | Configuring SR with IS-IS |
 | 8 | Configuring SR with OSPF |
 | 9–22 | Mapping Server, LDP migration, SR-TE, TI-LFA, L3VPN/EVPN, troubleshooting |
 

@@ -168,6 +168,21 @@ versus QoS bits preserved, and it is worth deciding on purpose.
 
 ---
 
+## Hands-on labs
+
+Standalone labs that go with the series — full device configs, verification
+output, diagrams and write-ups.
+
+### [L3VPN Over SR-MPLS](labs/l3vpn-over-sr-mpls)
+
+Four-router IOS XRv lab proving MPLS L3VPN (VRF/RD/RT/VPNv4 BGP) running on
+an SR-MPLS transport instead of LDP — two PEs, two VRFs, full running-configs,
+and a traceroute-verified packet walk through the transport and VPN labels.
+
+![L3VPN over SR-MPLS](labs/l3vpn-over-sr-mpls/diagrams/L3VPN_Segment_Routing_Network_Diagram.png)
+
+---
+
 ## Coming up
 
 | Day | Topic |

@@ -1,0 +1,88 @@
+RP/0/0/CPU0:R1#show running-config 
+Sat Jun  6 15:38:48.896 UTC
+Building configuration...
+!! IOS XR Configuration 6.3.1
+!! Last configuration change at Sat Jun  6 15:25:18 2026 by cisco
+!
+hostname R1
+vrf HR
+ address-family ipv4 unicast
+  import route-target
+   1:200
+  !
+  export route-target
+   1:200
+  !
+ !
+!
+vrf Accounting
+ address-family ipv4 unicast
+  import route-target
+   1:100
+  !
+  export route-target
+   1:100
+  !
+ !
+ !
+interface Loopback0
+ ipv4 address 1.1.1.1 255.255.255.255
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0
+ ipv4 address 10.1.12.1 255.255.255.0
+!
+interface GigabitEthernet0/0/0/1
+ vrf Accounting
+ ipv4 address 192.168.15.1 255.255.255.0
+!
+interface GigabitEthernet0/0/0/2
+ vrf HR
+ ipv4 address 192.168.16.1 255.255.255.0
+!
+router ospf 1
+ router-id 1.1.1.1
+ segment-routing mpls
+ segment-routing forwarding mpls
+ area 0
+ interface Loopback0
+   passive enable
+   prefix-sid index 1
+  !
+  interface GigabitEthernet0/0/0/0
+   network point-to-point
+  !
+ !
+!
+router bgp 12345
+ bgp router-id 1.1.1.1
+ address-family vpnv4 unicast
+ !
+ neighbor-group L3VPN
+  remote-as 12345
+  update-source Loopback0
+  address-family vpnv4 unicast
+  !
+ !
+ neighbor 4.4.4.4
+  use neighbor-group L3VPN
+ !
+ vrf HR
+  rd 2:2
+  address-family ipv4 unicast
+   network 192.168.16.0/24
+  !
+ !
+ vrf Accounting
+  rd 1:1
+  address-family ipv4 unicast
+   network 192.168.15.0/24
+     !
+ !
+!
+segment-routing
+ global-block 16000 23999
+!
+end

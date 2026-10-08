@@ -196,6 +196,35 @@ well-documented IOS XR syntax for teaching, not a captured lab output.*
 
 ---
 
+### Day 8 — Configuring SR with OSPF
+*The same model, carried by a different IGP*
+
+Yesterday: Segment Routing on IS-IS. Today: OSPF — and the interesting part
+isn't how different it is, it's how little changes. Unlike Day 7, this episode
+is built entirely on a **real four-router IOS XR lab**: R1–R4 in a line, one
+OSPF area, the default SRGB on every router, Prefix-SID indexes 1–4.
+
+Three things OSPF does differently from IS-IS, and everything else is
+identical:
+
+- **No `metric-style wide`.** SR rides in Opaque LSAs that already existed.
+- **Forwarding is a separate command.** `segment-routing mpls` advertises;
+  `segment-routing forwarding mpls` installs what arrives. Miss the second and
+  the database looks perfect while nothing forwards.
+- **The Prefix-SID lives under the interface, inside the area block.**
+
+The proof, straight from the lab — a traceroute from R1 to R4 shows the **same
+label, 16004, at every hop**. Every router computed it from the same SRGB and
+the same index. All of it travels in one LSA, Type 10 (the area-scoped
+Opaque): the index is advertised, the label is computed locally.
+
+▶ [Watch on YouTube](https://youtu.be/Ugb3zzkQiL8) · 16:59 ·
+[`videos/Day08_Configuring_SR_with_OSPF.mp4`](videos/Day08_Configuring_SR_with_OSPF.mp4)
+
+<img src="thumbnails/Day08.png" width="420" alt="Day 8 — Configuring SR with OSPF">
+
+---
+
 ## Hands-on labs
 
 Standalone labs that go with the series — full device configs, verification
@@ -215,7 +244,6 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 8 | Configuring SR with OSPF |
 | 9–22 | Mapping Server, LDP migration, SR-TE, TI-LFA, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.

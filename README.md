@@ -225,6 +225,34 @@ Opaque): the index is advertised, the label is computed locally.
 
 ---
 
+### Day 9 — The SR Mapping Server
+*Giving SIDs to routers that never asked for one*
+
+For two days Prefix-SIDs were configured the obvious way: log in to the router,
+type an index. Today, the two cases where that stops working — **scale**
+(a thousand routers, a thousand change windows, one typo is a duplicate SID)
+and **routers that cannot advertise a Prefix-SID at all** (old platforms,
+regions still on LDP). Both have one answer: the **Mapping Server**.
+
+The lab is a **real five-router IOS XR capture** across three OSPF areas, with a
+different SRGB on every router (default, 20000, 30000, 40000, 50000) — on
+purpose, to prove the Mapping Server advertises an *index*, never a label.
+
+- **One line, one router:** `1.1.1.1/32 1 range 100` — a hundred Prefix-SIDs.
+- **On the wire:** an Extended Prefix Range TLV in Opaque Type 7 — Range Size
+  is what scales.
+- **Crossing an area:** the ABR re-originates it and sets the **IA-flag**
+  (0x0 → 0x80), which stops redundant ABRs looping the advertisement.
+- **The proof:** XRV5's traceroute to 1.1.1.1 uses labels 40001, 30001, 20001 —
+  one destination, four different labels, one unchanging index.
+
+▶ [Watch on YouTube](https://youtu.be/9x-Cf7Zi5GU) · 16:28 ·
+[`videos/Day09_The_SR_Mapping_Server.mp4`](videos/Day09_The_SR_Mapping_Server.mp4)
+
+<img src="thumbnails/Day09.png" width="420" alt="Day 9 — The SR Mapping Server">
+
+---
+
 ## Hands-on labs
 
 Standalone labs that go with the series — full device configs, verification
@@ -244,7 +272,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 9–22 | Mapping Server, LDP migration, SR-TE, TI-LFA, L3VPN/EVPN, troubleshooting |
+| 10–22 | LDP migration, SR-TE, TI-LFA, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

@@ -253,6 +253,37 @@ purpose, to prove the Mapping Server advertises an *index*, never a label.
 
 ---
 
+### Day 10 — Migrating LDP to SR
+*A brownfield core, and nobody notices*
+
+Nobody gets a greenfield core. You inherit a network that has run LDP for years,
+carries live services, and has to be modernised without anyone noticing. The
+good news: this is one of the least dangerous migrations in networking, provided
+the order is right.
+
+- **Ships-in-the-night.** SR and LDP both produce MPLS labels and hand them to
+  the same LFIB, so a router runs both indefinitely. Migration is a long,
+  reversible coexistence, not a cutover.
+- **One keyword:** `segment-routing mpls sr-prefer` — where both labels exist,
+  use the SR one. It does *not* disable LDP or touch prefixes only LDP can
+  reach; remove it and everything goes straight back.
+- **Five phases:** enable SR and prefer nothing → verify in parallel → cover
+  the gaps with a Mapping Server (Day 9) → switch preference one router at a
+  time from the edge → retire LDP last.
+- **The boundary** is an ordinary label swap in the shared LFIB; going LDP→SR
+  needs a SID for the destination, which is why the Mapping Server phase comes
+  before the preference switch.
+
+Unlike Days 8 and 9 this episode is not built on a captured lab: the syntax is
+standard IOS XR and the sequence is the widely published industry approach.
+
+▶ [Watch on YouTube](https://youtu.be/luddzvojvuQ) · 15:41 ·
+[`videos/Day10_Migrating_LDP_to_SR.mp4`](videos/Day10_Migrating_LDP_to_SR.mp4)
+
+<img src="thumbnails/Day10.png" width="420" alt="Day 10 — Migrating LDP to SR">
+
+---
+
 ## Hands-on labs
 
 Standalone labs that go with the series — full device configs, verification
@@ -272,7 +303,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 10–22 | LDP migration, SR-TE, TI-LFA, L3VPN/EVPN, troubleshooting |
+| 11–22 | SR-TE, TI-LFA, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

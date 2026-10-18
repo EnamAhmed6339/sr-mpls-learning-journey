@@ -284,6 +284,32 @@ standard IOS XR and the sequence is the widely published industry approach.
 
 ---
 
+## Technical papers
+
+Longer-form write-ups that go with the series.
+
+### [SR-MPLS MTU: Packet Size, Label Depth, and Path Design](articles/SR-MPLS_MTU_Technical_Paper_Enam_Ahmed.pdf)
+*How to size every link for reliable, scalable Segment Routing*
+
+A link can pass ordinary 1,500-byte IP traffic and still fail once SR-MPLS or a
+service adds labels. This paper separates the different meanings of MTU, shows
+how to count label overhead (four bytes per entry, counted per link), and keeps
+two checks apart that are often confused: **byte size** and **label-stack depth**
+(MSD). It ends with a repeatable rollout method, a safe test procedure and the
+common design mistakes.
+
+- What "MTU" actually counts: IP MTU, MPLS packet size, L2 frame size, path MTU
+- A worked byte budget for 2-, 5- and 7-label stacks
+- Why the backup path can be the one that drops traffic
+- IPv4 Path MTU Discovery and IPv6 Packet Too Big
+- A seven-step design and rollout method, and how to probe it safely
+
+📄 [Read the PDF](articles/SR-MPLS_MTU_Technical_Paper_Enam_Ahmed.pdf)
+
+<img src="articles/SR-MPLS-MTU-card.png" width="420" alt="SR-MPLS MTU: Packet Size, Label Depth, and Path Design">
+
+---
+
 ## Hands-on labs
 
 Standalone labs that go with the series — full device configs, verification

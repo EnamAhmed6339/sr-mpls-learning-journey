@@ -284,6 +284,33 @@ standard IOS XR and the sequence is the widely published industry approach.
 
 ---
 
+### Day 11 — SR-TE Fundamentals
+*Policies, candidate paths, and preference*
+
+Module 3 starts here. The first ten days were about reachability - the best path
+the IGP could find. From today, the network is told to take a path it would not
+have chosen, and the question is what that costs.
+
+- **The old way charged for state.** RSVP-TE created state on every router a
+  path crossed, signalled hop by hop, and a full mesh grew with the square of the
+  edge routers - in the core.
+- **SR-TE charges nothing in the core.** A path is a list of SIDs carried in the
+  packet; the only router that knows a TE path exists is the one that imposed it.
+- **An SR Policy is named by three things:** head-end, color and end-point.
+- **Candidate paths** are explicit or dynamic, and exactly one is installed:
+  a path is selected when it is **valid and has the highest preference among the
+  valid ones** - preference 200 on an invalid path loses to 100 on a valid one.
+- **The Binding-SID** is one label standing for the entire path: the real win is
+  naming, so everything upstream keeps one stable label while the path underneath
+  changes.
+
+▶ [Watch on YouTube](https://youtu.be/b7ggirciTGs) · 16:41 ·
+[`videos/Day11_SR_TE_Fundamentals.mp4`](videos/Day11_SR_TE_Fundamentals.mp4)
+
+<img src="thumbnails/Day11.png" width="420" alt="Day 11 — SR-TE Fundamentals">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -329,7 +356,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 11–22 | SR-TE, TI-LFA, L3VPN/EVPN, troubleshooting |
+| 12–22 | SR-TE paths, TI-LFA, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

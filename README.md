@@ -311,6 +311,32 @@ have chosen, and the question is what that costs.
 
 ---
 
+### Day 12 — Explicit Paths and SID-Lists
+*Strict hops, loose hops, and pinning traffic to one link*
+
+Day 11 gave the vocabulary of SR Policies. Today the first real candidate path is
+built: the explicit one, where the SID-list is written by hand. A SID-list is
+Day 5's label stack written as configuration - the head-end imposes it on every
+packet, with no recomputation and no negotiation.
+
+- **Strict hop:** the next SID must be exactly one IGP hop away. Every hop named,
+  in order - for when the path *is* the requirement.
+- **Loose hop:** the next SID only needs to be reachable by shortest path - for
+  when only some waypoints matter. A single list can mix both.
+- **Pinning one link:** two Prefix-SIDs reach P2 by shortest path, then one strict
+  **Adjacency-SID** forces the exact next hop - an Adjacency-SID names a link,
+  never a node.
+- **What breaks a list:** a SID stops advertising, a strict hop is no longer
+  adjacent, a pinned link goes down, a typo. All four give an **invalid SID-list**
+  and no forwarding entry - never a silent fallback through the wrong path.
+
+▶ [Watch on YouTube](https://youtu.be/1Tvoq5PzYkw) · 12:54 ·
+[`videos/Day12_Explicit_Paths_and_SID_Lists.mp4`](videos/Day12_Explicit_Paths_and_SID_Lists.mp4)
+
+<img src="thumbnails/Day12.png" width="420" alt="Day 12 — Explicit Paths and SID-Lists">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -356,7 +382,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 12–22 | SR-TE paths, TI-LFA, L3VPN/EVPN, troubleshooting |
+| 13–22 | Dynamic paths, TI-LFA, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

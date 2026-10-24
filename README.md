@@ -337,6 +337,31 @@ packet, with no recomputation and no negotiation.
 
 ---
 
+### Day 13 — Dynamic Paths
+*Describe the objective, let the head-end compute the SID-list*
+
+Day 12's explicit SID-list is yours to maintain forever as the topology moves.
+Today the model flips: describe an objective and constraints, and the head-end
+computes the SID-list itself - and recomputes it when the network changes.
+
+- **Min-metric, with a margin.** The default objective is the shortest path by
+  IGP metric, TE metric or measured delay. A margin accepts anything within a
+  stated tolerance of the true shortest, so near-equal paths do not flap the
+  policy - with a cap on SID-list length.
+- **Five constraints:** TE affinity, IP address, SRLG, maximum metric, and limit
+  SIDs (your MSD protection, built into the computation).
+- **SRLG and disjointness.** An SRLG gives a shared physical risk a number so a
+  path can avoid it entirely. Two paths in the same **disjoint-group** are
+  guaranteed to share no link (or no node) - two paths that merely avoid each
+  other's links are *not* automatically disjoint.
+
+▶ [Watch on YouTube](https://youtu.be/Pa72YwgVVPs) · 12:29 ·
+[`videos/Day13_Dynamic_Paths.mp4`](videos/Day13_Dynamic_Paths.mp4)
+
+<img src="thumbnails/Day13.png" width="420" alt="Day 13 — Dynamic Paths">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -382,7 +407,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 13–22 | Dynamic paths, TI-LFA, L3VPN/EVPN, troubleshooting |
+| 14–22 | Binding-SID stitching, TI-LFA, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

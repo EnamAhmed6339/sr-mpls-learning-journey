@@ -362,6 +362,32 @@ computes the SID-list itself - and recomputes it when the network changes.
 
 ---
 
+### Day 14 — Binding-SID and Path Stitching
+*One label that outlives the path underneath it*
+
+Day 11 mentioned the Binding-SID almost in passing. Today it gets the whole
+session: a label that names a policy, not a path, is one of the most powerful
+ideas in SR-TE.
+
+- **A stable name.** Every candidate path of a policy shares one BSID, so
+  services, static routes and other policies can steer by it while the path
+  underneath is recomputed or replaced.
+- **Two ways into a policy.** By colour and end-point (the ordinary case), or by
+  pushing the BSID itself - no colour match, no end-point lookup. The label is
+  the instruction.
+- **Stitching across a domain boundary.** PE1 has no visibility into Domain B,
+  so its SID-list is: reach the ABR, then push the ABR's own BSID. The ABR runs
+  its own independently-computed policy and pops the BSID like any other label.
+- **MSD relief.** A BSID counts as one label at the head-end that pushes it;
+  what it expands into is somebody else's depth budget.
+
+▶ [Watch on YouTube](https://youtu.be/I5NVcBTEfqo) · 13:05 ·
+[`videos/Day14_Binding_SID_and_Path_Stitching.mp4`](videos/Day14_Binding_SID_and_Path_Stitching.mp4)
+
+<img src="thumbnails/Day14.png" width="420" alt="Day 14 — Binding-SID and Path Stitching">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -407,7 +433,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 14–22 | Binding-SID stitching, TI-LFA, L3VPN/EVPN, troubleshooting |
+| 15–22 | On-Demand Next Hop, TI-LFA, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

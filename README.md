@@ -388,6 +388,33 @@ ideas in SR-TE.
 
 ---
 
+### Day 15 — On-Demand Next Hop
+*A policy that builds itself*
+
+Days 11-14 built the full SR-TE toolkit, but configuring a policy per destination
+does not scale past a handful of PEs. On-Demand Next Hop is the automation that
+makes it production-grade.
+
+- **The reframe.** Every policy is (head-end, colour, end-point). The head-end
+  and end-point already come from where traffic is and where it is going; only
+  the colour is new information. So a BGP route carrying that colour triggers the
+  policy automatically, at the end-point the route names.
+- **How it works.** A BGP route arrives with a colour community, the head-end
+  checks its ODN templates, and a match instantiates a real SR Policy with the
+  route's own next-hop as the end-point. The route then resolves over it.
+- **One template per colour.** A template reuses Day 13's objective - ODN only
+  decides *when* an existing mechanism applies.
+- **SLA to colour.** Gold (real-time voice/video) maps to a min-delay colour,
+  Silver (business VPN) to a colour that avoids a region, Bronze to no template
+  and ordinary ECMP. The colour is where business intent meets network config.
+
+▶ [Watch on YouTube](https://youtu.be/_pI-8Pwltwk) · 13:16 ·
+[`videos/Day15_On_Demand_Next_Hop.mp4`](videos/Day15_On_Demand_Next_Hop.mp4)
+
+<img src="thumbnails/Day15.png" width="420" alt="Day 15 — On-Demand Next Hop">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -433,7 +460,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 15–22 | On-Demand Next Hop, TI-LFA, L3VPN/EVPN, troubleshooting |
+| 16–22 | TI-LFA, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

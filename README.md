@@ -415,6 +415,32 @@ makes it production-grade.
 
 ---
 
+### Day 16 — TI-LFA
+*Precomputing the detour before it is needed*
+
+Module 4 opens with resilience. Detect, flood, recompute: ordinary IGP
+convergence routinely takes longer than the 50ms at which a person hears a voice
+call glitch, so something has to be computed before the failure happens.
+
+- **P-space.** What the Point of Local Repair can already reach by its own
+  shortest path without the protected link or node.
+- **Q-space.** The mirror question from the far side: what can already reach
+  the destination safely.
+- **PQ-node.** A router in both. Reach it from the PLR, and the ordinary
+  shortest path onward is already safe - two shortest-path segments joined at a
+  loop-free handoff.
+- **The repair list.** Usually one SID, the PQ-node's Node-SID, precomputed for
+  every protected link and node. The failure only triggers a lookup.
+- **What it protects.** Link failure, node failure and SRLG, using the same
+  P-space/Q-space computation each time.
+
+▶ [Watch on YouTube](https://youtu.be/aFvBnivkmyw) · 12:59 ·
+[`videos/Day16_TI_LFA.mp4`](videos/Day16_TI_LFA.mp4)
+
+<img src="thumbnails/Day16.png" width="420" alt="Day 16 — TI-LFA">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -460,7 +486,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 16–22 | TI-LFA, L3VPN/EVPN, troubleshooting |
+| 17–22 | Microloop avoidance, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

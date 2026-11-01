@@ -441,6 +441,32 @@ call glitch, so something has to be computed before the failure happens.
 
 ---
 
+### Day 17 — Microloop Avoidance
+*The loop TI-LFA doesn't protect against*
+
+Day 16 solved the first 50 milliseconds after a failure. Today is the problem
+TI-LFA was never designed to touch: what happens in the seconds that follow it.
+
+- **How two correct routers still loop.** Router A converges first, and its new
+  shortest path via B is right. Router B has not converged, and its path back
+  through A is right by its own old view. A sends to B, B sends to A. The loop
+  exists purely because of timing.
+- **Not a TI-LFA failure.** TI-LFA already handed off to a precomputed repair
+  path. A microloop forms between routers running ordinary convergence, in a
+  separate window that gets worse as the network grows.
+- **The fix: converge in order, on purpose.** A router that would create a loop
+  by converging first deliberately waits - a local convergence delay holds the
+  old path in the FIB for a short interval while downstream routers move first.
+- **One timeline.** 0 to 50ms is TI-LFA's window; from 50ms onward ordered
+  convergence closes the microloop window. Neither alone covers the event.
+
+▶ [Watch on YouTube](https://youtu.be/Z-CSttMB0xo) · 12:52 ·
+[`videos/Day17_Microloop_Avoidance.mp4`](videos/Day17_Microloop_Avoidance.mp4)
+
+<img src="thumbnails/Day17.png" width="420" alt="Day 17 — Microloop Avoidance">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -486,7 +512,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 17–22 | Microloop avoidance, L3VPN/EVPN, troubleshooting |
+| 18–22 | SR-PCE, L3VPN/EVPN, troubleshooting |
 
 New lesson every day.
 

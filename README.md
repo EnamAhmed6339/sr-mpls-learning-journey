@@ -467,6 +467,32 @@ TI-LFA was never designed to touch: what happens in the seconds that follow it.
 
 ---
 
+### Day 18 — SR-PCE
+*Computing paths with full network visibility*
+
+For six days every path was computed by the router that needed it, from the
+topology that router could see. Today is what happens when that is not enough.
+
+- **Why a head-end is not enough.** It computes alone, from its own IGP view,
+  one policy at a time. It cannot compute across an area or domain boundary,
+  keep paths from two head-ends disjoint, or see what other policies are doing.
+- **BGP-LS.** Re-exports each domain's link-state (nodes, links, prefixes, and
+  the TE attributes on them) over BGP, so the PCE holds every domain's topology
+  in one database.
+- **PCEP.** The router (the PCC) asks for paths, reports every policy and state
+  change, and accepts updates. A stateful PCE remembers what every router
+  reports, so it computes with the whole picture.
+- **Delegated vs PCE-initiated.** A delegated policy is configured on the
+  head-end and owned by it - one extra word, `pcep`, hands the computation to
+  the PCE. A PCE-initiated policy is pushed down with nothing configured there.
+
+▶ [Watch on YouTube](https://youtu.be/yy9dn8GhExc) · 13:38 ·
+[`videos/Day18_SR_PCE.mp4`](videos/Day18_SR_PCE.mp4)
+
+<img src="thumbnails/Day18.png" width="420" alt="Day 18 — SR-PCE">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -512,7 +538,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 18–22 | SR-PCE, L3VPN/EVPN, troubleshooting |
+| 19–22 | L3VPN/EVPN, troubleshooting, design review |
 
 New lesson every day.
 

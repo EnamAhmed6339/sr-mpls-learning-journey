@@ -493,6 +493,30 @@ topology that router could see. Today is what happens when that is not enough.
 
 ---
 
+### Day 19 — L3VPN over SR-MPLS
+*Two labels, no LDP, from a real four-router lab*
+
+Eighteen days of transport, and today it carries a real customer service. The
+configuration, BGP output, label table and traceroute all come from a real
+four-router IOS-XR lab.
+
+- **Two layers, two jobs.** Transport: OSPF floods a Prefix-SID per loopback to
+  get a labelled packet to the egress PE. Service: MP-BGP VPNv4 between the two
+  PEs carries customer routes with a route target and a VPN label.
+- **What SR changes.** Only the transport. The service layer is untouched.
+- **A VPN label belongs to the PE that allocated it.** xrv1's own labels are
+  24001 (Accounting) and 24002 (HR); what it learned from xrv4 is the other way
+  round, because the sender pushes the receiver's value.
+- **One traceroute, both labels.** The stack 16004/24002: 16004 is xrv4's
+  Prefix-SID (16000 + index 4), and 24002 is xrv4's label for Accounting.
+
+▶ [Watch on YouTube](https://youtu.be/rb55ni5i1wA) · 13:19 ·
+[`videos/Day19_L3VPN_over_SR_MPLS.mp4`](videos/Day19_L3VPN_over_SR_MPLS.mp4)
+
+<img src="thumbnails/Day19.png" width="420" alt="Day 19 — L3VPN over SR-MPLS">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -538,7 +562,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 19–22 | L3VPN/EVPN, troubleshooting, design review |
+| 20–22 | L2VPN/EVPN, troubleshooting, design review |
 
 New lesson every day.
 

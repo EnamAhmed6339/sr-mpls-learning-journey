@@ -517,6 +517,34 @@ four-router IOS-XR lab.
 
 ---
 
+### Day 20 — L2VPN and EVPN over SR-MPLS
+*A different service on the same transport*
+
+Yesterday a layer 3 service rode the transport. Today, a layer 2 service on
+exactly the same transport. This day uses standard, well-documented EVPN
+material rather than a captured lab, and the video says so.
+
+- **Classic L2VPN learns by flooding.** Pseudowires are signalled pair by pair,
+  MAC addresses are learned in the data plane, and a dual-homed site can use
+  only one link at a time.
+- **EVPN turns MAC addresses into BGP routes.** The same iBGP pattern as Day 19
+  with a new address family, `l2vpn evpn`, and five route types: Ethernet
+  auto-discovery, MAC/IP advertisement, inclusive multicast, Ethernet segment
+  and IP prefix.
+- **The Ethernet Segment.** A site on two PEs shares one Ethernet Segment
+  Identifier, so both links carry traffic; a designated forwarder is elected
+  for flooded traffic and Type 1 routes give aliasing and fast withdrawal.
+- **Same transport, a different service label.** The outer label never changes:
+  a Prefix-SID to the egress PE. Only the inner label changes meaning: a VRF
+  for L3VPN, a circuit for EVPN-VPWS, an EVI for multipoint EVPN.
+
+▶ [Watch on YouTube](https://youtu.be/mkxUlbA5QAo) · 12:13 ·
+[`videos/Day20_L2VPN_and_EVPN.mp4`](videos/Day20_L2VPN_and_EVPN.mp4)
+
+<img src="thumbnails/Day20.png" width="420" alt="Day 20 — L2VPN and EVPN over SR-MPLS">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -562,7 +590,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 20–22 | L2VPN/EVPN, troubleshooting, design review |
+| 21–22 | Troubleshooting, design review |
 
 New lesson every day.
 

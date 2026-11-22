@@ -545,6 +545,37 @@ material rather than a captured lab, and the video says so.
 
 ---
 
+### Day 21 — Troubleshooting SR-MPLS
+*The order to check things in*
+
+For twenty days we built. Today we fix. The adjacency, missing Prefix-SID and
+SRGB cases come from the real Day 8 lab's own troubleshooting table; the
+silent case is a documented consequence of the design, not a captured
+broken-lab log, and the video says so.
+
+- **Two kinds of failure.** Loud ones never came up: a neighbour stuck in
+  ExStart, a missing Prefix-SID. Silent ones come up and forward nothing:
+  adjacencies Full, database complete, ping works. Ping only follows the IP
+  table, so it proves the underlay and nothing about Segment Routing.
+- **Five layers, bottom to top.** IGP adjacency, SR enabled and advertised,
+  label installed, the packet (labels and MTU), then the policy. The fault is
+  always at the lowest layer that is not healthy.
+- **Layer 3, the silent one.** On IOS XR with OSPF, advertising SR and
+  installing its labels are two statements: `segment-routing mpls` and
+  `segment-routing forwarding mpls`. Leave out the second and nothing
+  complains; only labelled forwarding is missing. Test it with
+  `show mpls forwarding`.
+- **Symptom to first check.** A symptom table maps each fault to the one
+  command worth running first, with the command keywords varying by release
+  and the order never changing.
+
+▶ [Watch on YouTube](https://youtu.be/bLF-e6_ep3Q) · 13:29 ·
+[`videos/Day21_Troubleshooting_SR_MPLS.mp4`](videos/Day21_Troubleshooting_SR_MPLS.mp4)
+
+<img src="thumbnails/Day21.png" width="420" alt="Day 21 — Troubleshooting SR-MPLS">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -590,7 +621,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 21–22 | Troubleshooting, design review |
+| 22 | Design review and recap |
 
 New lesson every day.
 

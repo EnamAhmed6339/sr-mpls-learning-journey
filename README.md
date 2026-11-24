@@ -576,6 +576,36 @@ broken-lab log, and the video says so.
 
 ---
 
+### Day 22 — Design Review and Recap
+*What to decide before you build*
+
+The final lesson. Nothing new: twenty-one days on one page, turned into a design
+review. It is a synthesis rather than a captured lab, and the SRGB, SRLB and
+index-block figures in the video are illustrative design examples.
+
+- **The journey in five modules.** Foundations (Days 1-5), control plane
+  (6-10), traffic engineering (11-15), resilience (16-18), services and
+  operations (19-21). One idea runs through all of them: the path is a list of
+  labels and the core keeps no per-path state.
+- **Labels first.** One SRGB, a separate SRLB and a documented index plan are
+  the decisions that are hardest to change later. Anycast SIDs need the same
+  SRGB on every router that advertises them.
+- **Traffic engineering for a named requirement.** The IGP shortest path is the
+  default; add policies, ODN or a PCE only where a requirement calls for it.
+- **Protect all three failure windows.** TI-LFA for the first 50 ms, microloop
+  avoidance for what follows, and honest SRLG data underneath both.
+- **Budget it.** Bytes (four per label), depth (MSD) and shared risk (the SRLG
+  register) are separate checks. A big MTU proves nothing about depth.
+- **Migrate in phases, then run it.** Acceptance is the forwarding table plus a
+  labelled traceroute. Ping is not acceptance.
+
+▶ [Watch on YouTube](https://youtu.be/DQNEH_87Wn4) · 11:51 ·
+[`videos/Day22_Design_Review_and_Recap.mp4`](videos/Day22_Design_Review_and_Recap.mp4)
+
+<img src="thumbnails/Day22.png" width="420" alt="Day 22 — Design Review and Recap">
+
+---
+
 ## Technical papers
 
 Longer-form write-ups that go with the series.
@@ -621,7 +651,7 @@ and a traceroute-verified packet walk through the transport and VPN labels.
 
 | Day | Topic |
 |---|---|
-| 22 | Design review and recap |
+| SRv6, Flex-Algo | Next topics to study after the 22-day series |
 
 New lesson every day.
 
